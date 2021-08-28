@@ -2,48 +2,39 @@
   <v-main>
     <v-container>
       <div id="app">
-        <!-- <div v-for="item in items" v-bind:key="item.key">
-          <li>{{ item }}</li>
-        </div> -->
-
-        <div class="wasyoku">
-          <h1 class="text-center mt-4" id="item-1">
-            <div class="title-S">今週のおすすめ飲食店</div>
-            <span class="badge badge-secondary">和食</span>
-          </h1>
-
-          <div class="card mb-3 mt-3 mx-auto" style="width: 43rem">
-            <div v-for="item in items" v-bind:key="item.key">
-              <img v-bind:src="item.画像url" class="card-img-top" alt="画像" />
-
-              <div class="card-body">
-                <p class="card-text"></p>
-                <h3>{{ item.店名 }}</h3>
-                <br />
-                <h5>評価：{{ item.レビュー平均 }}</h5>
-                <br />
-                <div id="js-items" class="d-flex justify-content-center">
-                  <div class="mr-3">
-                    <a
-                      class="btn btn-primary"
-                      v-bind:href="item.店舗url"
-                      role="button"
-                      >店舗詳細</a
-                    >
-                  </div>
-                  <div class="ml-3">
-                    <a
-                      class="btn btn-primary"
-                      v-bind:href="item.トップレビュー"
-                      role="button"
-                      >口コミ</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div v-show="loading" class="justify-center">
+          <v-progress-circular
+            :size="50"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+          <p>loading...</p>
         </div>
+
+        <v-row no-gutters>
+          <v-col
+            v-for="item in items"
+            :key="item.key"
+            cols="12"
+            sm="3"
+            md="4"
+            lg="3"
+          >
+            <div class="card" elevation="1">
+              <figure>
+                <img width="100%" height="170" :src="item.画像url" />
+              </figure>
+              <h3>{{ item.店名 }}</h3>
+              <p>評価：{{ item.レビュー平均 }}</p>
+              <a style="color: blue" :href="item.店舗url" role="button"
+                >店舗詳細</a
+              >
+              <a style="color: blue" :href="item.トップレビュー" role="button"
+                >口コミ</a
+              >
+            </div>
+          </v-col>
+        </v-row>
       </div>
     </v-container>
   </v-main>
@@ -55,6 +46,7 @@ export default {
   data() {
     return {
       items: [],
+      loading: true,
     }
   },
   mounted() {
@@ -62,7 +54,10 @@ export default {
       .get(
         'https://script.google.com/macros/s/AKfycbzewD2zYbLFaoFIGRXjV87GPR8aEeBUEOY4kpEd7U2zluCIcGK44q7MyHeVQsPLHkYhUg/exec?foodType=和食'
       )
-      .then((response) => (this.items = response.data))
+      .then((response) => {
+        this.items = response.data
+        this.loading = false
+      })
   },
 }
 </script>
