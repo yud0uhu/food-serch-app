@@ -1,19 +1,25 @@
 version: 2.1
 orbs:
   node: circleci/node@4.1.0
+  
+commands:
+  nodejs_install:
+    steps:
+      - node/install:
+          install-yarn: true
+          node-version: '14.16.1'
 
   yarn_lint:
-    description: node/yarnのインストールとフロントエンドのlint実行するコマンド
     steps:
       - node/install:
           install-yarn: true
       - run:
-          name: lint frontend
           command: |
             yarn install
             yarn lint:eslint
             yarn lint:prettier
-            jobs:
+
+jobs:
   build:
     docker:
       - image: circleci/node:8.9
