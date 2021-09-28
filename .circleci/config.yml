@@ -22,7 +22,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9
+      - image: 'cimg/base:stable'
     working_directory: ~/client
     steps:
       - checkout
