@@ -2,23 +2,6 @@ version: 2.1
 orbs:
   node: circleci/node@4.7.0
   
-commands:
-  nodejs_install:
-    steps:
-      - node/install:
-          install-yarn: true
-      - run: node --version
-
-#   yarn_lint:
-#     steps:
-#       - node/install:
-#           install-yarn: true
-#       - run:
-#           command: |
-#             yarn install
-#             yarn lint:eslint
-#             yarn lint:prettier
-
 jobs:
   build:
     docker:
@@ -26,12 +9,6 @@ jobs:
     working_directory: ~/client
     steps:
       - checkout
-      - nodejs_install
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-      - run: yarn install
-      - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
-          paths:
+      - node/install-packages
+      - run:
+          command: npm run test
