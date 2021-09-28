@@ -6,15 +6,5 @@ jobs:
     working_directory: ~/client
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-          paths:
-            - ~/client/node_modules
-      - run: yarn
-      - save_cache:
-          key: v1-dependencies-{{ checksum "package.json" }}
-          paths:
-            - ~/client/node_modules
-      - run: yarn test
+      - run: yarn install
       - run: yarn build
