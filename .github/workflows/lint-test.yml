@@ -1,4 +1,5 @@
 name: Check code using lint and test, when push a commit
+
 on:
   pull_request:
     types: [opened, synchronize]
