@@ -22,7 +22,7 @@ commands:
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9
+      - image: circleci/node@4.1.0
     working_directory: ~/client
     steps:
       - checkout
