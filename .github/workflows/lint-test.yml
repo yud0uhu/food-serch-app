@@ -19,12 +19,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - run:
-          shell: yarn install
-          working-directory: client
-      - run:
-          shell: yarn lint
-          working-directory: client
-      - run:
-          shell: yarn test
-          working-directory: client
+      - run: yarn install
+        working-directory: ./client
+      - run: yarn lint
+        working-directory: ./client
+      - run: yarn test
+        working-directory: ./client
