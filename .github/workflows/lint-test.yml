@@ -23,5 +23,5 @@ jobs:
         working-directory: ./client
       - run: yarn lint
         working-directory: ./client
-      - run: yarn test
-        working-directory: ./client
+      # - run: yarn test
+      #   working-directory: ./client
