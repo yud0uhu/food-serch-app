@@ -1,0 +1,28 @@
+name: Check code using lint and test, when push a commit
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  run_lint_and_test:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        node: ["12.14.1"]
+    timeout-minutes: 300
+    steps:
+      - name: checkout pushed commit
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: run lint and test
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: yarn install
+        working-directory: ./client
+      - run: yarn lint
+        working-directory: ./client
+      # - run: yarn test
+      #   working-directory: ./client
